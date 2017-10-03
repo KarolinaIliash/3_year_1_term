@@ -20,12 +20,16 @@ public class Main extends SimpleApplication {
     }
 
     protected ArrayList<Geometry> spheres = new ArrayList();
+    //Variable for generating balls not in every frame but
+    //every hand-picked period of time
     protected float timer = 0;
+    //Auxiliary variable for generating balls from different sides of Oz
     protected boolean isPositivePosition = true;
     
     @Override
     public void simpleInitApp() {
         ColorRGBA value = ColorRGBA.Yellow;
+        //Initializing four spheres
         spheres.add(makeGeom(0.3f, new Vector3f(0, 0 ,0), new Vector3f(0,0,0), value));
         rootNode.attachChild(spheres.get(0));
         spheres.add(makeGeom(0.3f, new Vector3f(0, -1, -10), new Vector3f(0,0.5f, 5f), value));
@@ -39,12 +43,8 @@ public class Main extends SimpleApplication {
         sun.setDirection(new Vector3f(-1,0,0).normalizeLocal());
         sun.setColor(ColorRGBA.White);
         rootNode.addLight(sun);
-        Vector3f loc = cam.getLocation();
-        Vector3f dir  =cam.getDirection();
         cam.lookAtDirection(new Vector3f(-1, 0, 0), new Vector3f(0, 1, 0));
         cam.setLocation(new Vector3f(10f, 0, 0));
-        System.out.println("loc = " + loc.x + " " + loc.y + " " + loc.z);
-        System.out.println("dir = " + dir.x + " " + dir.y + " " + dir.z);
     }
 
     @Override
@@ -59,10 +59,12 @@ public class Main extends SimpleApplication {
                 spheres.get(i).setLocalTranslation(spheres.get(i).getLocalTranslation().add(velocity.mult(tpf)));
             }
             else{
+                //Deleting balls which are definitely invisible from user
                 rootNode.detachChild(spheres.get(i));
                 spheres.remove(i);
             }
         }
+        //Checking whether there are collisions between balls
         for(int i = 0; i < spheres.size(); i++){
             for(int j = i + 1; j < spheres.size(); j++){
                 Vector3f centre1 = spheres.get(i).getLocalTranslation();
@@ -75,7 +77,7 @@ public class Main extends SimpleApplication {
             }
         }
         timer += tpf;
-        //generate new balls
+        //Generating new balls
         if(timer > 0.3f && spheres.size() < 80){
             timer = 0;
             float minCoord = -15f;
@@ -121,12 +123,13 @@ public class Main extends SimpleApplication {
         }
     }
 
-    
+    //Auxiliary function which generate random float number in preset interval
     protected float getRandFloat(float min, float max){
         Random random = new Random();
         return random.nextFloat()*(max - min) + min;
     }
     
+    //Function which calculate and set new velocity vectors for balls
     protected void boom(Geometry first, Geometry second){
         Vector3f O1 = first.getLocalTranslation();
         Vector3f O2 = second.getLocalTranslation();
@@ -139,10 +142,12 @@ public class Main extends SimpleApplication {
         if(!(v1.dot(x) < 0 || v2.dot(x) > 0)) return;
         Vector3f v1P = v1.project(x);
         Vector3f v2P= v2.project(x);
+        //Constant parts of velocity vectors
         Vector3f v1Const = v1.subtract(v1P);
         Vector3f v2Const = v2.subtract(v2P);
         float r1 = first.getUserData("radius");
         float r2 = second.getUserData("radius");
+        //Calculate masses of balls. We consider that density = 1
         float m1 = (float) ((4f/3f)*Math.PI*r1*r1*r1);
         float m2 = (float) ((4f/3f)*Math.PI*r2*r2*r2);
         //On the axe OO1 it's central collision 
@@ -154,6 +159,7 @@ public class Main extends SimpleApplication {
         second.setUserData("speed", v2Const.add(v2PNew));
     }
     
+    //Creating Geometry with sphere mesh
     protected Geometry makeGeom(float radius, Vector3f transl, Vector3f speed, ColorRGBA value){
         Sphere sphere = new Sphere(32, 32, radius);
         Geometry geom = new Geometry("Sphere", sphere);
