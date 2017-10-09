@@ -1,0 +1,1 @@
+In this app there's a ball which is moving in direction of gadget's tilt. We use data from gravity sensor(if it's available, else from accelerometer sensor). On every sensor's change we move the ball if it's possible(it doesn't want to move behind the screen).  
