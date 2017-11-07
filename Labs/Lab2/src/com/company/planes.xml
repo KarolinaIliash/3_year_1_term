@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <planes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="planesNS"
+        xsi:schemaLocation="com.company">
+        <plane model="Thales Watchkeeper WK450">
+            <origin>United Kingdom</origin>
+            <chars>
+                <type>reconnaissance</type>
+                <seats>1</seats>
+                <ammunition>false</ammunition>
+                <radar>true</radar>
+            </chars>
+            <parameters>
+                <height>1.8</height>
+                <length>3.4</length>
+                <wingspan>3.8</wingspan>
+            </parameters>
+            <price>1000</price>
+        </plane>
+        <plane model="Boeing F-15SE Silent Eagle">
+            <origin>USA</origin>
+            <chars>
+                <type>fighter</type>
+                <seats>2</seats>
+                <ammunition rackets="10">true</ammunition>
+                <radar>true</radar>
+            </chars>
+            <parameters>
+                <height>5.63</height>
+                <length>19.43</length>
+                <wingspan>13.05</wingspan>
+            </parameters>
+            <price>1000000</price>
+        </plane>
+        <plane model="Shenyang J-16">
+            <origin>China</origin>
+            <chars>
+                <type>fighter</type>
+                <seats>2</seats>
+                <ammunition rackets="6">true</ammunition>
+                <radar>true</radar>
+            </chars>
+            <parameters>
+                <height>6.36</height>
+                <length>21.9</length>
+                <wingspan>14.7</wingspan>
+            </parameters>
+            <price>1000001</price>
+        </plane>
+    </planes>
