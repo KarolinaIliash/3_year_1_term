@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="planesNS"
+           xmlns:tns="planesNS"
+           elementFormDefault="qualified">
+           <xsd:element name="planes">
+               <xsd:complexType>
+                   <xsd:sequence>
+                       <xsd:element name="plane"
+                                type="tns:Plane"
+                                minOccurs="1"
+                                maxOccurs="unbounded"/>
+                   </xsd:sequence>
+               </xsd:complexType>
+           </xsd:element>
+           <xsd:complexType name="Plane">
+               <xsd:sequence>
+                   <xsd:element name="origin" type="tns:Origin"/>
+                   <xsd:element name="chars" type="tns:Chars"/>
+                   <xsd:element name="parameters" type="tns:Params"/>
+                   <xsd:element name="price" type="xsd:decimal"/>
+               </xsd:sequence>
+               <xsd:attribute name="model" type="xsd:string" use="required"/>
+           </xsd:complexType>
+           <xsd:simpleType name="Origin">
+               <xsd:restriction base="xsd:string">
+                   <xsd:enumeration value="United Kingdom"/>
+                   <xsd:enumeration value="China"/>
+                   <xsd:enumeration value="USA"/>
+                   <xsd:enumeration value="Japan"/>
+                   <xsd:enumeration value="Czech Republic"/>
+                   <xsd:enumeration value="Russia"/>
+               </xsd:restriction>
+           </xsd:simpleType>
+           <xsd:complexType name="Chars">
+               <xsd:sequence>
+                   <xsd:element name="type" type="tns:Type"/>
+                   <xsd:element name="seats" type="tns:Seats"/>
+                   <xsd:element name="ammunition" type="tns:Ammunition"/>
+                   <xsd:element name="radar" type="xsd:boolean"/>
+               </xsd:sequence>
+           </xsd:complexType>
+           <xsd:simpleType name="Type">
+               <xsd:restriction base="xsd:string">
+                   <xsd:enumeration value="reconnaissance"/>
+                   <xsd:enumeration value="support"/>
+                   <xsd:enumeration value="escort"/>
+                   <xsd:enumeration value="fighter"/>
+                   <xsd:enumeration value="interceptor"/>
+               </xsd:restriction>
+           </xsd:simpleType>
+           <xsd:simpleType name="Seats">
+               <xsd:restriction base="xsd:integer">
+                   <xsd:minInclusive value="1"/>
+                   <xsd:maxInclusive value="2"/>
+               </xsd:restriction>
+           </xsd:simpleType>
+           <xsd:complexType name="Ammunition">
+               <xsd:simpleContent>
+                   <xsd:extension base="xsd:boolean">
+                       <xsd:attribute name="rackets" use="optional">
+                           <xsd:simpleType>
+                               <xsd:restriction base="xsd:integer">
+                                   <xsd:minInclusive value="0"/>
+                                   <xsd:maxInclusive value="10"/>
+                               </xsd:restriction>
+                           </xsd:simpleType>
+                       </xsd:attribute>
+                   </xsd:extension>
+               </xsd:simpleContent>
+           </xsd:complexType>
+           <xsd:complexType name="Params">
+               <xsd:sequence>
+                   <xsd:element name="height" type="xsd:decimal"/>
+                   <xsd:element name="length" type="xsd:decimal"/>
+                   <xsd:element name="wingspan" type="xsd:decimal"/>
+               </xsd:sequence>
+           </xsd:complexType>
+</xsd:schema>
